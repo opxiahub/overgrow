@@ -19,4 +19,4 @@ COPY --from=builder /app/dist ./dist
 
 EXPOSE 8080
 
-CMD ["serve", "dist", "-l", "8080", "-s"]
+CMD ["serve", "dist", "-l", "tcp://0.0.0.0:8080", "-s"]
