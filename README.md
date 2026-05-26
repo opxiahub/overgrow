@@ -1,174 +1,81 @@
-# 🟢🔵 OVERGROW
+# Overgrow
 
-**A two-player hex territory game where every move spreads, converts, and conquers.**
+Overgrow is a two-player hex territory game. Players take turns expanding across a 9x9 hex grid by cloning into adjacent cells or jumping two cells away. Every landing converts neighboring enemy cells, so a single move can swing control of the board.
 
-Overgrow is a fast, strategic board game played on a hexagonal grid. Two players take turns growing their cells across the board — splitting to clone, leaping to jump, and converting enemy neighbors on every landing. One well-placed move can flip half the board. Most territory when the board fills up wins.
+Play the hosted version at [overgrow.opxia.com](https://overgrow.opxia.com/).
 
-Simple to learn. Impossible to put down.
+![Overgrow gameplay screenshot](public/overgrow.png)
 
-🌐 **[Play it live → overgrow.opxia.ai](https://overgrow.opxia.ai)**
+## What It Provides
 
-<p align="center">
-  <img src="public/overgrow.png" alt="Overgrow gameplay screenshot" width="600" />
-</p>
+- Local two-player hot-seat gameplay on one device.
+- A complete rules loop: select, split, leap, convert, skip blocked turns, and end the game.
+- Player names, live score tracking, territory bar, undo, reset, and menu controls.
+- A fully client-side implementation with no backend or account system.
 
----
+## How To Play
 
-## 🎮 How to Play
+1. Enter names for both players and start the game.
+2. On your turn, select one of your cells.
+3. Choose a highlighted destination:
+   - Split: move one hex. The original cell stays and a new cell is created.
+   - Leap: move two hexes. The original cell is removed and placed at the destination.
+4. After landing, all adjacent enemy cells convert to your color.
+5. The game ends when neither player can move. The player with more cells wins.
 
-### Setup
-- Two players share one device (hot-seat multiplayer)
-- Each player starts with **2 cells** in opposite corners of a 9×9 hex grid
-- Enter your names on the menu screen and hit **Play**
+If a player has no legal move, their turn is skipped. If both players are blocked, the board is scored.
 
-### On Your Turn
+## Run Locally
 
-**1. Tap one of your cells** to select it. Valid moves light up on the board.
+Requirements:
 
-**2. Choose your move:**
-
-| Move | How | What Happens |
-|------|-----|--------------|
-| **Split** (+) | Move to an **adjacent** hex (1 space) | Your cell **clones** — original stays, copy appears |
-| **Leap** (⟶) | Jump to a hex **2 spaces** away | Your cell **moves** there (no clone left behind) |
-
-**3. Convert:** After you land, **all adjacent enemy cells instantly flip to your color.**
-
-> 💡 **Split** grows your count by 1 but moves short. **Leap** doesn't grow you but reaches further — and can land deep in enemy territory for massive conversions.
-
-### Winning
-
-The game ends when **neither player can move** (usually when the board is full). The player controlling **more cells wins**.
-
-If one player loses all their cells, the other wins immediately by elimination.
-
-### Tips & Strategy
-
-- **Splits are safe.** They always grow your count by at least 1.
-- **Leaps are risky.** You don't clone, so you need to convert enough enemies to make it worth it.
-- **Edges and corners** are defensive — fewer neighbors means fewer ways to get converted.
-- **Chain reactions don't exist** — only cells adjacent to your landing spot flip. Plan your positioning.
-- **The mid-game swing** is real. A single leap into a cluster of 5-6 enemy cells will flip the entire scoreboard.
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- npm (comes with Node.js)
-
-### Run Locally
+- Node.js 20 or later
+- npm
 
 ```bash
-# Clone the repo
-git clone https://github.com/YOUR_USERNAME/overgrow.git
+git clone https://github.com/opxiahub/overgrow.git
 cd overgrow
-
-# Install dependencies
 npm install
-
-# Start dev server
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser. That's it.
+Open [http://localhost:5173](http://localhost:5173).
 
-### Build for Production
+For a production build:
 
 ```bash
 npm run build
-```
-
-The production-ready files will be in the `dist/` folder.
-
-### Preview Production Build
-
-```bash
 npm run preview
 ```
 
----
+## Docker
 
-## 🌍 Deploy
-
-Overgrow is a fully static app — no backend. Run `npm run build` and host the `dist/` folder anywhere: Vercel, Netlify, Cloudflare Pages, GitHub Pages, or any static file server.
-
----
-
-## 📁 Project Structure
-
-```
-overgrow/
-├── public/
-│   ├── favicon.svg
-│   └── overgrow.png
-├── src/
-│   ├── App.jsx          # Main game component
-│   ├── main.jsx         # Entry point
-│   └── index.css        # Global styles
-├── index.html
-├── package.json
-├── vite.config.js
-├── LICENSE
-└── README.md
+```bash
+docker build -t overgrow .
+docker run --rm -p 8080:8080 overgrow
 ```
 
----
+Open [http://localhost:8080](http://localhost:8080).
 
-## 🛠 Tech Stack
+## Technical Flow
 
-- **React 18** — UI rendering
-- **Vite** — Build tool and dev server
-- **Pure CSS** — No UI framework, fully custom design
-- **Zero backend** — Entirely client-side, no server needed
+Overgrow is a static React app built with Vite.
 
-No external game libraries. No canvas. The entire board is rendered as SVG with React state management.
+- `src/App.jsx` contains the game state, hex-grid math, move validation, conversion rules, and UI rendering.
+- The board uses an odd-r offset coordinate grid and converts positions to cube coordinates for reliable hex distance checks.
+- Legal destinations are empty cells at distance `1` for splits or distance `2` for leaps.
+- Moves update a cloned board, convert adjacent opponent cells, then advance or skip turns based on available legal moves.
+- The board is rendered as SVG, while the rest of the interface is standard React and CSS.
 
----
+## Scripts
 
-## 🤝 Contributing
+```bash
+npm run dev       # Start the Vite dev server
+npm run build     # Create a production build in dist/
+npm run preview   # Preview the production build locally
+npm run lint      # Run ESLint
+```
 
-Contributions are welcome! Some ideas for what you could add:
+## License
 
-- **Online multiplayer** via WebSockets
-- **AI opponent** with difficulty levels
-- **Board size options** (7×7 quick match, 11×11 epic mode)
-- **Move history** and replay system
-- **Sound effects** and haptic feedback
-- **Elo rating system** for competitive play
-- **Mobile app** (React Native port)
-- **Colorblind mode** with pattern-based pieces
-- **Tournament mode** (best of 3/5)
-
-### How to Contribute
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-You're free to use, modify, and distribute this game. Attribution appreciated but not required.
-
----
-
-## 🙏 Credits
-
-- Game concept and original implementation built with [Claude](https://claude.ai) by Anthropic
-- Hex grid math based on [Amit Patel's hex guide](https://www.redblobgames.com/grids/hexagons/)
-
----
-
-<p align="center">
-  <b>OVERGROW</b><br/>
-  <i>Grow. Convert. Dominate.</i><br/><br/>
-  If you enjoy the game, give it a ⭐ on GitHub!
-</p>
+Overgrow is released under the [MIT License](LICENSE).

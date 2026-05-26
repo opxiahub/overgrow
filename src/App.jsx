@@ -109,7 +109,7 @@ function initBoard() {
   return b;
 }
 
-export default function Spore() {
+export default function Overgrow() {
   const [screen, setScreen] = useState("menu");
   const [board, setBoard] = useState(initBoard);
   const [turn, setTurn] = useState(1);
@@ -232,7 +232,7 @@ export default function Spore() {
           fontSize: 50, fontWeight: 800, letterSpacing: 14, margin: "0 0 2px",
           background: "linear-gradient(135deg,#00e8a2,#e800a2)",
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-        }}>SPORE</h1>
+        }}>OVERGROW</h1>
         <p style={{ color: "#4a4a6a", fontSize: 12, letterSpacing: 5, marginBottom: 36, textTransform: "uppercase" }}>
           Grow • Convert • Dominate
         </p>

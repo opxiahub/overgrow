@@ -1,7 +1,17 @@
 {
   "name": "overgrow",
-  "private": true,
   "version": "0.0.0",
+  "description": "A two-player hex territory game built with React and Vite.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opxiahub/overgrow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/opxiahub/overgrow/issues"
+  },
+  "homepage": "https://overgrow.opxia.com/",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
